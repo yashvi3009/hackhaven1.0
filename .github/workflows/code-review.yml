@@ -1,0 +1,30 @@
+name: Code Review
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+  pull_request_review_comment:
+    types: [created]
+
+concurrency:
+  group:
+    ${{ github.repository }}-${{ github.event.number || github.head_ref ||
+    github.sha }}-${{ github.workflow }}-${{ github.event_name ==
+    'pull_request_review_comment' && 'pr_comment' || 'pr' }}
+  cancel-in-progress: ${{ github.event_name != 'pull_request_review_comment' }}
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: coderabbitai/ai-pr-reviewer@latest
+        env:
+          GITHUB_TOKEN: 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
+          OPENAI_API_KEY: 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
+        with:
+          debug: false
+          review_simple_changes: true
+          review_comment_lgtm: true
