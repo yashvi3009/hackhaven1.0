@@ -11,6 +11,7 @@ import os
 import datetime
 import matplotlib.pyplot as plt
 
+print("Hooray!")
 # Custom CSS to style the sidebar and main content
 st.markdown(
     """
